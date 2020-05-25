@@ -30,6 +30,12 @@ ggplot(total_steps, aes(daily_total_step)) +
   geom_histogram(binwidth = 500) + theme_bw() + xlab("Total Daily Steps") + ylab ("Count")
 ```
 
+```{r mean_median}
+mean(total_steps$daily_total_step, na.rm = TRUE) #mean daily total steps
+median(total_steps$daily_total_step, na.rm = TRUE) #median daily total steps
+```
+
+
 The mean total number of steps taken per day is `r round(mean(total_steps$daily_total_step, na.rm = TRUE),0)` and the median is `r median(total_steps$daily_total_step, na.rm = TRUE)`.
 
 ## What is the average daily activity pattern?
@@ -43,6 +49,13 @@ average_steps <- data %>%
 
 plot(average_steps$interval, average_steps$mean_step, type = "l", ylab = ("Average Steps"), xlab = "Interval")
 ```
+
+```{r max_steps}
+average_steps$interval[which.max(average_steps$mean_step)] #interval with max steps
+round(max(average_steps$mean_step),0) #max number of steps rounded to nearest integer
+
+```
+
 
 The 5-minute interval which on average across all the days in the data that contains the maximum number of steps is `r average_steps$interval[which.max(average_steps$mean_step)]` and that maximum is  `r round(max(average_steps$mean_step),0)` steps.
 
@@ -66,6 +79,17 @@ total_steps.imp <- data.imp %>%
 ggplot(total_steps.imp, aes(daily_total_step)) +
   geom_histogram(binwidth = 500) + theme_bw() + xlab("Total Daily Steps") + ylab ("Count")
 ```
+
+```{r mean_median_2}
+mean(total_steps.imp$daily_total_step, na.rm = TRUE) # new mean daily total steps
+median(total_steps.imp$daily_total_step, na.rm = TRUE) # new median daily total steps
+
+mean(total_steps.imp$daily_total_step, na.rm = TRUE)-mean(total_steps$daily_total_step, na.rm = TRUE) # Increase in mean daily total steps
+median(total_steps.imp$daily_total_step, na.rm = TRUE)-median(total_steps$daily_total_step, na.rm = TRUE) # Increase in median daily total steps
+
+```
+
+
 
 The mean total number of steps taken per day using mean imputation for missing values  is `r round(mean(total_steps.imp$daily_total_step, na.rm = TRUE),0)` and the median is `r round(median(total_steps.imp$daily_total_step, na.rm = TRUE),0)`. Using mean imputation results in a change of `r round(mean(total_steps$daily_total_step, na.rm = TRUE) - mean(total_steps.imp$daily_total_step, na.rm = TRUE),0)` total daily steps, which makes sense considering the choice of missing value imputation strategy. The median value increased by `r round(median(total_steps.imp$daily_total_step, na.rm = TRUE) - median(total_steps$daily_total_step, na.rm = TRUE),0)` total daily steps.
 
